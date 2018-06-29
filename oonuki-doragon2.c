@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 int St(int, char *);
-int kaihuku(int);
+int kaihuku(int, char *);
 int kougekisyori(int, int);
 int mahoukougeki(int, int);
 int Player(int, char *);
@@ -39,7 +39,7 @@ int main(void)
         printf("\n攻撃の場合は１を押してください\n魔法攻撃の場合は2を押してください\n回復の場合は3を押してください\n = ");
         scanf("%d", &PHP);
         if (PHP == 3) {
-            PlayerHP = kaihuku(PlayerHP); // プレイヤーの回復
+            PlayerHP = kaihuku(PlayerHP, name); // プレイヤーの回復
             continue;
         }
         if (PHP == 2) {
@@ -92,14 +92,14 @@ int mahoukougeki(int ATK, int EnemyHP) // 魔法攻撃
     return 0;
 }
 
-int kaihuku(int playerhp) // 回復
+int kaihuku(int playerhp, char *name) // 回復
 {
     int kaihukuti;
     srand(time(NULL));
     kaihukuti = rand() % 18 + 10;
     playerhp = playerhp + kaihukuti;
     printf("回復値 = %d\n", kaihukuti);
-    printf("PlayerHP = %d\n", playerhp);
+    printf("%s のHP = %d\n", name, playerhp);
     printf("回復しました\n");
     return playerhp;
 }
