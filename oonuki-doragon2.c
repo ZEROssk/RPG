@@ -29,7 +29,7 @@ int main(void)
 
     while (EnemyHP > 0)
     {
-        PlayerHP = Player(PlayerHP, name);
+        PlayerHP = Player(PlayerHP, name);  // プレイヤーが受けるダメージの処理
         if (PlayerHP <= 0)
         {
             break;
@@ -39,9 +39,9 @@ int main(void)
         scanf("%d", &PHP);
         if (PHP == 2)
         {
-            PlayerHP = kaihuku(PlayerHP);
+            PlayerHP = kaihuku(PlayerHP);   // プレイヤーの回復
         } else {
-            kougekisyori(ATK, EnemyHP);
+            kougekisyori(ATK, EnemyHP); // 攻撃処理部分
         }
         fflush(stdout);
     }
@@ -77,8 +77,11 @@ int kougekisyori(int ATK, int EnemyHP) //　攻撃処理
 
 int kaihuku(int playerhp) // 回復
 {
-    int kaihukuti = 10;
+    int kaihukuti;
+    srand(time(NULL));
+    kaihukuti = rand() % 12 + 10;
     playerhp = playerhp + kaihukuti;
+    printf("回復値 = %d\n", kaihukuti);
     printf("PlayerHP = %d\n", playerhp);
     printf("回復しました\n");
     return playerhp;
