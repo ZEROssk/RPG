@@ -5,6 +5,7 @@
 int St(int, char *);
 int kaihuku(int);
 int kougekisyori(int, int);
+int mahoukougeki(int, int);
 int Player(int, char *);
 int Cr(int);
 int Ah(int, int);
@@ -29,24 +30,26 @@ int main(void)
 
     while (EnemyHP > 0)
     {
-        PlayerHP = Player(PlayerHP, name);  // プレイヤーが受けるダメージの処理
+        PlayerHP = Player(PlayerHP, name); // プレイヤーが受けるダメージの処理
         if (PlayerHP <= 0)
         {
             break;
         }
         printf("\n%sのターン\nEnemy HP = %d", name, EnemyHP);
-        printf("\n攻撃の場合は１を押してください\n回復の場合は２を押してください\n = ");
+        printf("\n攻撃の場合は１を押してください\n魔法攻撃の場合は2を押してください\n回復の場合は3を押してください\n = ");
         scanf("%d", &PHP);
-        if (PHP == 2)
-        {
-            PlayerHP = kaihuku(PlayerHP);   // プレイヤーの回復
+        if (PHP == 3) {
+            PlayerHP = kaihuku(PlayerHP); // プレイヤーの回復
+            continue;
+        }
+        if (PHP == 2) {
+            mahoukougeki(ATK, EnemyHP); // 魔法攻撃の処理
         } else {
-            kougekisyori(ATK, EnemyHP); // 攻撃処理部分
+            kougekisyori(ATK, EnemyHP); // 通常攻撃の処理部分
         }
         fflush(stdout);
     }
-    if (PlayerHP <= 0)
-    {
+    if (PlayerHP <= 0) {
         printf(" %sは死んでしまった\n", name);
     } else {
         En(EnemyHP, name);
@@ -75,11 +78,25 @@ int kougekisyori(int ATK, int EnemyHP) //　攻撃処理
     return 0;
 }
 
+int mahoukougeki(int ATK, int EnemyHP) // 魔法攻撃
+{
+    int mahou;
+    srand(time(NULL));
+    mahou = rand() % 10 + 9;
+    printf("\n攻撃力の設定 = ");
+    scanf("%d", &ATK);
+    ATK = Cr(ATK) + mahou;
+    EnemyHP = Ah(ATK, EnemyHP);
+    printf("魔術による攻撃力アップ + %d\n", mahou);
+    printf("相手に %d の魔法攻撃\n", ATK);
+    return 0;
+}
+
 int kaihuku(int playerhp) // 回復
 {
     int kaihukuti;
     srand(time(NULL));
-    kaihukuti = rand() % 12 + 10;
+    kaihukuti = rand() % 18 + 10;
     playerhp = playerhp + kaihukuti;
     printf("回復値 = %d\n", kaihukuti);
     printf("PlayerHP = %d\n", playerhp);
