@@ -27,6 +27,7 @@ int main(void)
     ATK = Cr(ATK);
     EnemyHP = Ah(ATK, EnemyHP);
     printf("ドラゴンに %d のダメージ\n", ATK);
+    //printf("デバッグ数値 %d", EnemyHP);
 
     while (EnemyHP > 0)
     {
@@ -43,9 +44,11 @@ int main(void)
             continue;
         }
         if (PHP == 2) {
-            mahoukougeki(ATK, EnemyHP); // 魔法攻撃の処理
+            EnemyHP = mahoukougeki(ATK, EnemyHP); // 魔法攻撃の処理
+            //printf("デバッグ数値 %d", EnemyHP);
         } else {
-            kougekisyori(ATK, EnemyHP); // 通常攻撃の処理部分
+            EnemyHP = kougekisyori(ATK, EnemyHP); // 通常攻撃の処理部分
+            //printf("デバッグ数値 %d", EnemyHP);
         }
         fflush(stdout);
     }
@@ -68,17 +71,18 @@ int St(int PlayerHP, char *name) // 最初の表示
     return 0;
 }
 
-int kougekisyori(int ATK, int EnemyHP) //　攻撃処理
+int kougekisyori(int ATK, int enemyhpone) //　攻撃処理
 {
     printf("\n攻撃力の設定 = ");
     scanf("%d", &ATK);
     ATK = Cr(ATK);
-    EnemyHP = Ah(ATK, EnemyHP);
+    enemyhpone = Ah(ATK, enemyhpone);
     printf("相手に %d のダメージ\n", ATK);
-    return 0;
+    //printf("デバッグ数値 %d", enemyhpone);
+    return enemyhpone;
 }
 
-int mahoukougeki(int ATK, int EnemyHP) // 魔法攻撃
+int mahoukougeki(int ATK, int enemyhp) // 魔法攻撃
 {
     int mahou;
     srand(time(NULL));
@@ -86,10 +90,11 @@ int mahoukougeki(int ATK, int EnemyHP) // 魔法攻撃
     printf("\n攻撃力の設定 = ");
     scanf("%d", &ATK);
     ATK = Cr(ATK) + mahou;
-    EnemyHP = Ah(ATK, EnemyHP);
+    enemyhp = Ah(ATK, enemyhp);
     printf("魔術による攻撃力アップ + %d\n", mahou);
     printf("相手に %d の魔法攻撃\n", ATK);
-    return 0;
+    //printf("デバッグ数値 %d", enemyhp);
+    return enemyhp;
 }
 
 int kaihuku(int playerhp, char *name) // 回復
@@ -110,7 +115,7 @@ int Cr(int atk) // クリティカル値
     srand(time(NULL));
     c = rand() % 6;
     atk = atk + c;
-    printf("クリティカル値 %d\n", c);
+    printf("クリティカル値 + %d\n", c);
     return atk;
 }
 
